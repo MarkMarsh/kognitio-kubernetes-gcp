@@ -220,7 +220,7 @@ EOF
   # wait for loadbalancer and report IP address 
   while true; do
     sleep 5
-    LB_IP=$(kubectl get svc mycluster-external-service -o=jsonpath={.status.loadBalancer.ingress[0].ip})
+    LB_IP=$(kubectl get svc ${K8S_LB_SVC} -o=jsonpath={.status.loadBalancer.ingress[0].ip})
     if [[ "${LB_IP}" == "" ]] ; then
       echo "Waiting for load balancer to allocate external IP address"
     else
@@ -232,7 +232,7 @@ EOF
   done
   ;;
 "info")
-  LB_IP=$(kubectl get svc mycluster-external-service -o=jsonpath={.status.loadBalancer.ingress[0].ip})
+  LB_IP=$(kubectl get svc ${K8S_LB_SVC} -o=jsonpath={.status.loadBalancer.ingress[0].ip})
   echo "Connect to Kognitio cluster on ${LB_IP} port 6550"
   ;;
 *)
